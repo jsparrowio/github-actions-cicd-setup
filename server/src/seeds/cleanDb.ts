@@ -1,13 +1,16 @@
+import models from '../models/index.js';
 import db from '../config/connection.js';
 
-const cleanDB = async (): Promise<void> => {
+export default async (modelName: "Question", collectionName: string) => {
   try {
-    await db.dropCollection("Question");
-    console.log('Question collection dropped.');
+    let modelExists = await models[modelName].db!.db!.listCollections({
+      name: collectionName
+    }).toArray()
+
+    if (modelExists!.length) {
+      await db.dropCollection(collectionName);
+    }
   } catch (err) {
-    console.error('Error cleaning collections:', err);
-    process.exit(1);
+    throw err;
   }
 }
-
-export default cleanDB;
