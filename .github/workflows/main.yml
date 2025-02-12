@@ -1,5 +1,5 @@
 # Name of workflow
-name: Lint and Test workflow
+name: Cypress Test workflow
 
 # Trigger workflow on all pull requests
 on:
@@ -36,3 +36,6 @@ jobs:
       # Run tests
       - name: Run Component Tests
         run: npm run test-component
+
+      - name: Publish Formatted Test Summary Results
+        run: npx github-actions-ctrf ctrf/ctrf-report.json
